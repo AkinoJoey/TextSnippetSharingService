@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" href="./public/css/style.css">
+    <title>Text Snipetter</title>
+    <link rel="icon" href="#" type="image/x-icon">
+</head>
+
+<body>
+    <main class="container">
+        <nav>
+            <strong>Text Snipetter</strong>
+        </nav>
+        <div>
+            <div >
+                <div id="editor-container" class="monaco-container"></div>
+            </div>
+        </div>
+
+        <div>
+            <h3>option menu</h3>
+            <div>
+                <p>Syntax Highlight:</p>
+                <select class="w-50">
+                    <option>None</option>
+                    <option value="python">python</option>
+                    <option value="javascript">javascript</option>
+                </select>
+            </div>
+            <div>
+                <p>Text Expiration:</p>
+                <select class="w-50">
+                    <option>Never</option>
+                    <option value="10 Minutes">10 Minutes</option>
+                    <option value="1 Hour">1 Hour</option>
+                </select>
+            </div>
+            <button role="button" class="w-50">Create Snippet</button>
+            
+        </div>
+    </main>
+    
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.41.0/min/vs/loader.min.js"></script>
+<script src="public/js/main.js"></script>
+</body>
+</html>
