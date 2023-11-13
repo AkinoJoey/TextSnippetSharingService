@@ -11,10 +11,17 @@ $routes = include('Routing/routes.php');
 $path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 $path = ltrim($path, '/');
 
+$isSnippet = str_starts_with($path, 'snippet/');
+
+if($isSnippet){
+    $hash = explode('/', $path)[1];
+    $path = 'snippet';
+};
+
 // ルーティングにパスが存在するかチェックする
 if (isset($routes[$path])) {
     // コールバックを呼び出してrendererを作成します。
-    $renderer = $routes[$path]();
+    $renderer = $isSnippet? $routes[$path]($hash) : $routes[$path]();
 
     try {
         // ヘッダーを設定します。
