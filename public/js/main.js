@@ -1,4 +1,4 @@
-const createBtn = document.getElementById('create-btn');
+const createBtn = document.getElementById("create-btn");
 
 require.config({
     paths: {
@@ -10,7 +10,7 @@ require(["vs/editor/editor.main"], function () {
     const editor = monaco.editor.create(
         document.getElementById("editor-container"),
         {
-            value: 'ここに共有したいテキストを入力してください。' + "\n\n\n",
+            value: "ここに共有したいテキストを入力してください。" + "\n\n\n",
             language: "plaintext",
             automaticLayout: true,
         }
@@ -20,15 +20,15 @@ require(["vs/editor/editor.main"], function () {
     createLanguageOption(languages);
 
     // expiration optionの作成
-    fetch('../../expirations.php')
+    fetch("../../expirations.php")
         .then((res) => {
-            return res.json()
+            return res.json();
         })
         .then((data) => {
             createExpirationOption(data);
-        })
+        });
 
-    createBtn.addEventListener('click', async function (event) {
+    createBtn.addEventListener("click", async function (event) {
         event.preventDefault();
 
         let formData = new FormData();
@@ -39,21 +39,31 @@ require(["vs/editor/editor.main"], function () {
         let hash = await fetch("../../insertData.php", {
             method: "POST",
             body: formData,
-        }).then(res => res.text());
+        }).then((res) => res.text());
+
+        await fetch("../../setExpirationEvents.php", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                hashedValue: hash,
+                expiration: formData.get("expiration"),
+            }),
+        })
 
         window.location.href = `snippet/${hash}`;
-    })
+    });
 });
 
-
 function createLanguageOption(languages) {
-    const languageSelect = document.getElementById('language');
+    const languageSelect = document.getElementById("language");
 
     for (const languageId in languages) {
         const languageInfo = languages[languageId];
-        const language = languageInfo['id'];
+        const language = languageInfo["id"];
 
-        let newOption = document.createElement('option');
+        let newOption = document.createElement("option");
         let optionText = document.createTextNode(language);
         newOption.appendChild(optionText);
         newOption.value = language;
@@ -65,14 +75,14 @@ function createLanguageOption(languages) {
 function createExpirationOption(expirations) {
     const expirationSelect = document.getElementById("expiration");
 
-    expirations.forEach(expiration => {
+    expirations.forEach((expiration) => {
         let newOption = document.createElement("option");
-        let optionText = document.createTextNode(expiration);
+        let optionText = document.createTextNode(expiration.text);
         newOption.appendChild(optionText);
-        newOption.value = expiration;
+        newOption.value = expiration.value;
 
         expirationSelect.appendChild(newOption);
-    });{
-        
+    });
+    {
     }
 }

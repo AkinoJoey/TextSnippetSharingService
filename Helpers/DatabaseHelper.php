@@ -14,7 +14,11 @@ class DatabaseHelper{
         $result = $stmt->get_result();
         $data = $result->fetch_assoc();
 
-        if(!$data)  throw new Exception("Could not find a snippet in database");
+        if(!$data) {
+            http_response_code(404);
+            echo "Snippet Expired";
+            throw new Exception("Could not find a snippet in database");
+        }
         
         return $data;
     }

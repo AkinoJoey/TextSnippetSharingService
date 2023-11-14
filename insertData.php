@@ -1,5 +1,5 @@
 <?php
-spl_autoload('.php');
+spl_autoload_extensions(".php");
 spl_autoload_register();
 
 use Database\MySQLWrapper;
@@ -12,7 +12,8 @@ $expiration = isset($_POST["expiration"]) ? $_POST["expiration"] : "";
 $db = new MySQLWrapper();
 $stmt = $db->prepare("INSERT INTO snippets(snippet, url, language, expiration) VALUES (?, ?, ?, ?)");
 $stmt->bind_param('ssss', $snippet, $hashedValue, $language, $expiration);
-$stmt->execute();
+$result = $stmt->execute();
 
+if(!$result) throw new Exception("Error executing INSERT query: " . $stmt->error);
 
 echo $hashedValue;
