@@ -6,7 +6,7 @@ use Database\MySQLWrapper;
 use Exception;
 
 class DatabaseHelper{
-    public static function getSnippetData(string $hash) : array {
+    public static function getSnippetData(string $hash) : array | false {
         $db = new MySQLWrapper();
         $stmt = $db->prepare("SELECT snippet, language FROM snippets WHERE url = ?");
         $stmt->bind_param('s', $hash);
@@ -14,11 +14,7 @@ class DatabaseHelper{
         $result = $stmt->get_result();
         $data = $result->fetch_assoc();
 
-        if(!$data) {
-            http_response_code(404);
-            echo "Snippet Expired";
-            throw new Exception("Could not find a snippet in database");
-        }
+        if(!$data) return false;
         
         return $data;
     }

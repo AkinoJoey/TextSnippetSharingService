@@ -1,6 +1,5 @@
 <?php
 use Helpers\DatabaseHelper;
-use Response\HTTPRenderer;
 use Response\Render\HTMLRenderer;
 
 return [
@@ -9,6 +8,9 @@ return [
     },
     'snippet' => function(string $hash) :HTMLRenderer {
         $data = DatabaseHelper::getSnippetData($hash);
+
+        if(!$data) return new HTMLRenderer('component/404');
+
         $snippet = $data['snippet'];
         $language = $data['language'];
         

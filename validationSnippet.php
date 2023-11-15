@@ -1,12 +1,24 @@
 <?php
 
-$snippet = file_get_contents('php://input');
+$json = file_get_contents('php://input');
+$snippet = json_decode($json, true)['snippet'];
 
-$db_charset = 'utf8mb4'; // MySQLのcharsetに合わせる
-$text_max_length = 32767; // 全角だと65535, 半角だと32767
-
-if (mb_strlen($snippet, $db_charset) >= $text_max_length || !mb_check_encoding($snippet, $db_charset)) {
-    http_response_code(400);
-    echo "Invalid text: Either the text exceeds the maximum allowed length or it contains invalid characters.";
-    throw new Exception("Invalid text: Either the text exceeds the maximum allowed length or it contains invalid characters.");
+if ((bool)preg_match('/^\s*$/', $snippet)){
+    echo json_encode(['success' => false, 'message' => '無効なテキスト: 空白のみのスニペットは作成できません。']);
+    exit;
 }
+
+if(!mb_check_encoding($snippet, 'UTF-8') && !(bool)preg_match('//u', $snippet)){
+    echo json_encode(['success' => false, 'message' => '無効なテキスト: エンコーディングが無効またはUnicode文字以外が含まれています。']);
+    exit;
+}
+
+$snippet_size = strlen($snippet);
+$text_max_length = 65535; // text型の最大バイト数
+
+if ($snippet_size > $text_max_length ) {
+    echo json_encode(['success' => false, 'message' => '無効なテキスト: 入力できる最大文字数を超えています。']);
+    exit;
+}
+
+echo json_encode(['success' => true]);

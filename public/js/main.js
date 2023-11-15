@@ -10,7 +10,7 @@ require(["vs/editor/editor.main"], function () {
     const editor = monaco.editor.create(
         document.getElementById("editor-container"),
         {
-            value: "ここに共有したいテキストを入力してください。" + "\n\n\n",
+            value: "ここに共有したいテキストを入力してください。\n\n",
             language: "plaintext",
             automaticLayout: true,
         }
@@ -31,26 +31,15 @@ require(["vs/editor/editor.main"], function () {
     createBtn.addEventListener("click", async function (event) {
         event.preventDefault();
 
-        let formData = new FormData();
-        formData.append("language", document.getElementById("language").value);
-        formData.append("expiration", document.getElementById("expiration").value);
-        formData.append("snippet", editor.getValue());
+        const language = document.getElementById("language").value;
+        const expiration = document.getElementById("expiration").value;
+        const snippet = editor.getValue();
 
-        let hash = await fetch("../../insertData.php", {
-            method: "POST",
-            body: formData,
-        }).then((res) => res.text());
+        await validateSnippet(snippet);
 
-        await fetch("../../setExpirationEvents.php", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                hashedValue: hash,
-                expiration: formData.get("expiration"),
-            }),
-        })
+        const hash = await insertData(language, expiration, snippet);
+
+        await setExpirationEvents(hash, expiration);
 
         window.location.href = `snippet/${hash}`;
     });
@@ -83,6 +72,52 @@ function createExpirationOption(expirations) {
 
         expirationSelect.appendChild(newOption);
     });
-    {
+}
+
+async function validateSnippet(snippet) {
+    const response = await fetch("../../validationSnippet.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ snippet }),
+    });
+
+    const data = await response.json();
+
+    if (!data.success) {
+        alert(data.message);
+        throw new Error(data.message);
     }
+}
+
+async function insertData(language, expiration, snippet) {
+    const requestData = {
+        "language": language,
+        "expiration": expiration,
+        "snippet": snippet,
+    };
+
+    const response = await fetch("../../insertData.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestData),
+    });
+
+    return await response.text();
+}
+
+async function setExpirationEvents(hash, expiration) {
+    await fetch("../../setExpirationEvents.php", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            hashedValue: hash,
+            expiration,
+        }),
+    });
 }
