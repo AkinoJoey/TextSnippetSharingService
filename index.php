@@ -1,6 +1,11 @@
 <?php
-spl_autoload_extensions(".php");
-spl_autoload_register();
+spl_autoload_register(function ($className) {
+    $filePath = str_replace('\\', '/', $className) . '.php';
+
+    if (file_exists($filePath)) {
+        require $filePath;
+    }
+});
 
 $DEBUG = true;
 
