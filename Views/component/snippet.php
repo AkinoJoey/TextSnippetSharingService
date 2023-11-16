@@ -1,6 +1,6 @@
 <main class="container">
     <h2 class="text-center"><a class="text-decoration-none" href="/">Text Snipetter</a></h2>
-    <p><kbd><?= $language ?></kbd></p>
+    <p><kbd><?= htmlspecialchars($language) ?></kbd></p>
     <div>
         <div>
             <div id="preview-container" class="monaco-container"></div>

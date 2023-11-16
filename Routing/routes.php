@@ -4,7 +4,8 @@ use Response\Render\HTMLRenderer;
 
 return [
     '' => function() : HTMLRenderer {
-        return new HTMLRenderer('component/top');
+        $expirations =  DatabaseHelper::getExpirations();
+        return new HTMLRenderer('component/top', ['expirations' => $expirations]);
     },
     'snippet' => function(string $hash) :HTMLRenderer {
         $data = DatabaseHelper::getSnippetData($hash);

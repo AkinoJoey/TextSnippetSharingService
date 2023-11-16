@@ -1,11 +1,6 @@
 <?php
-spl_autoload_register(function ($className) {
-    $filePath = str_replace('\\', '/', $className) . '.php';
+require_once './Helpers/autoload.php';
 
-    if (file_exists($filePath)) {
-        require $filePath;
-    }
-});
 $commands = include "Commands/registry.php";
 
 $inputCommand = $argv[1];
