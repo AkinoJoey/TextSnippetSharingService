@@ -7,8 +7,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flexboxgrid/6.3.1/flexboxgrid.min.css" type="text/css">
     <link rel="stylesheet" href="../../public/css/style.css">
-    <title>Text Snipetter</title>
-    <link rel="icon" href="#" type="image/x-icon">
+    <link rel="icon" href="../../public/images/favicon.ico" type="image/x-icon">
+    <title>Text Snippetter</title>
 </head>
 
 <body>
