@@ -1,5 +1,5 @@
 <main class="container">
-    <h2 class="text-center"><a class="text-decoration-none" href="/">Text Snipetter</a></h2>
+    <h2 class="text-center"><a class="text-decoration-none" href="/">Text Snippetter</a></h2>
     <div>
         <div>
             <div id="editor-container" class="monaco-container"></div>
