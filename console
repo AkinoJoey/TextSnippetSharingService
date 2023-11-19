@@ -1,5 +1,5 @@
 <?php
-require_once './Helpers/autoload.php';
+require_once './autoload.php';
 
 $commands = include "Commands/registry.php";
 
