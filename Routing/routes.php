@@ -24,7 +24,7 @@ return [
 
             if (!$data) {
                 http_response_code(404);
-                return new HTMLRenderer('component/404', ['errormsg' => "Snippet Expired"]);
+                return new HTMLRenderer('component/404', ['errormsg' => "Expired Snippet"]);
             }
             $snippet = $data['snippet'];
             $language = $data['language'];
