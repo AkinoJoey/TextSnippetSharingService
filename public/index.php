@@ -1,22 +1,22 @@
 <?php
-require_once './Helpers/autoload.php';
-
+require '../autoload.php';
 $DEBUG = true;
 
-$routes = include('Routing/routes.php');
+$routes = include('../Routing/routes.php');
+$url = parse_url($_SERVER['REQUEST_URI'],PHP_URL_PATH);
+$paths = explode('/', $url);
+$path = $paths[1];
+$method = $_SERVER['REQUEST_METHOD'];
 
-$path = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
-$path = ltrim($path, '/');
-
-$isSnippet = str_starts_with($path, 'snippet/');
-
-if($isSnippet){
-    $hash = explode('/', $path)[1];
-    $path = 'snippet';
-};
-
-if (isset($routes[$path])) {
-    $renderer = $isSnippet? $routes[$path]($hash) : $routes[$path]();
+if (isset($routes[$method][$path])) {
+    if($method === 'GET'){
+        $renderer = $routes[$method][$path]($url);
+        
+    }elseif ($method === 'POST') {
+        $json = file_get_contents('php://input');
+        $data = json_decode($json, true);
+        $renderer = $routes[$method][$path]($data);
+    }
 
     try {
         foreach ($renderer->getFields() as $name => $value) {
