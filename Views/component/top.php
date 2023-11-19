@@ -57,10 +57,10 @@
             const language = document.getElementById("language").value;
             const expiration = document.getElementById("expiration").value;
 
-            await fetch('../../submitForm.php', {
-                    method: 'POST',
+            await fetch('/snippet', {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json'
+                        "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
                         'snippet': snippet,
@@ -68,15 +68,14 @@
                         'expiration': expiration
                     })
                 })
-                .then(response => response.json())
-                .then(data => {
+                .then((response) => response.json())
+                .then((data) => {
                     if (data.success) {
                         window.location.href = data.url;
-                    }else{
+                    } else {
                         alert(data.message);
                     }
-                })
-
+                });
         });
     });
 
