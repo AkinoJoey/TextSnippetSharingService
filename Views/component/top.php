@@ -57,7 +57,7 @@
             const language = document.getElementById("language").value;
             const expiration = document.getElementById("expiration").value;
 
-            await fetch('/snippet', {
+            await fetch('/', {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"

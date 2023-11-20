@@ -8,14 +8,14 @@ $paths = explode('/', $url);
 $path = $paths[1];
 $method = $_SERVER['REQUEST_METHOD'];
 
-if (isset($routes[$method][$path])) {
+if (isset($routes[$path][$method])) {
     if($method === 'GET'){
-        $renderer = $routes[$method][$path]($url);
+        $renderer = $routes[$path][$method]($url);
         
     }elseif ($method === 'POST') {
         $json = file_get_contents('php://input');
         $data = json_decode($json, true);
-        $renderer = $routes[$method][$path]($data);
+        $renderer = $routes[$path][$method]($data);
     }
 
     try {

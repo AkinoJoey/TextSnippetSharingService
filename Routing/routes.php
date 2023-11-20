@@ -5,35 +5,12 @@ use Response\Render\JSONRenderer;
 use Response\Render\HTMLRenderer;
 
 return [
-    'GET' => [
-        '' => function (string $url = null): HTMLRenderer {
+        '' => [
+            'GET' => function (string $url = null): HTMLRenderer {
             $expirations =  DatabaseHelper::getExpirations();
             return new HTMLRenderer('component/top', ['expirations' => $expirations]);
-        },
-        'snippet' => function (string $url): HTMLRenderer {
-            $paths = explode('/', $url);
-
-            // hash部分がない場合は404を出す
-            if(count($paths) < 3){
-                http_response_code(404);
-                return new HTMLRenderer('component/404', ['errormsg' => 'Page not found']);
-            }
-
-            $hash = $paths[2];
-            $data = DatabaseHelper::getSnippetData($hash);
-
-            if (!$data) {
-                http_response_code(404);
-                return new HTMLRenderer('component/404', ['errormsg' => "Expired Snippet"]);
-            }
-            $snippet = $data['snippet'];
-            $language = $data['language'];
-
-            return new HTMLRenderer('component/snippet', ['snippet' => $snippet, 'language' => $language]);
-        }
-    ],
-    'POST' => [
-        'snippet' => function (array $data): HTMLRenderer | JSONRenderer {
+            },
+            'POST' => function (array $data): HTMLRenderer | JSONRenderer {
             $snippet = $data['snippet'];
             $language = $data['language'];
             $expiration = $data['expiration'];
@@ -71,5 +48,28 @@ return [
                 return new JSONRenderer(["success" => false, "message" => "Database operation failed"]);
             }
         }
-    ]
+    ],
+    'snippet' => [
+            'GET' => function (string $url): HTMLRenderer {
+            $paths = explode('/', $url);
+
+            // hash部分がない場合は404を出す
+            if (count($paths) < 3) {
+                http_response_code(404);
+                return new HTMLRenderer('component/404', ['errormsg' => 'Page not found']);
+            }
+
+            $hash = $paths[2];
+            $data = DatabaseHelper::getSnippetData($hash);
+
+            if (!$data) {
+                http_response_code(404);
+                return new HTMLRenderer('component/404', ['errormsg' => "Expired Snippet"]);
+            }
+            $snippet = $data['snippet'];
+            $language = $data['language'];
+
+            return new HTMLRenderer('component/snippet', ['snippet' => $snippet, 'language' => $language]);
+        }
+        ]
 ];
