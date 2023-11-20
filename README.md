@@ -38,7 +38,7 @@ https://text-snippetter.yuki-gakiya.com
 - フロントエンド
   - 使用言語： HTML, CSS, Javascript
   - コードエディタ: Monaco Editor
-  - CSSフレームワーク: chota, Flexbox Grid
+  - CSSフレームワーク: Pico.css, Flexbox Grid
 
 - バックエンド
   - 使用言語： PHP
