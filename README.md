@@ -7,11 +7,15 @@ https://text-snippetter.yuki-gakiya.com
 ## Demo
 ![text-snippetter-demo-Trim](https://github.com/AkinoJoey/TextSnippetSharingService/assets/124570638/f7722fc0-60ae-4338-9a96-18c05f93c7b2)
 
+### 有効期限を過ぎた場合
+![expired](https://github.com/AkinoJoey/TextSnippetSharingService/assets/124570638/33b9e018-3de5-4f68-9b79-1e6333bb19ad)
+
+
 ## 概要
 エディターに共有したいテキストを貼り付け、プログラミング言語と有効期限を選択して作成ボタンをクリックすると、一意のURLに紐づいた共有画面が生成されます。このURLを通じて他の人とスニペットを簡単に共有できます。  
 
 共有画面では選択したプログラミング言語に応じて、シンタックスハイライトが適用されたテキストが表示されます。  
-設定した有効期限を過ぎるとスニペットは自動的に削除されます。
+設定した有効期限を過ぎるとスニペットは自動的に削除され、「Expired Snippet」というメッセージが表示されます。
 
 ## 使い方
 1. エディタに共有したいテキストを貼り付けます。
