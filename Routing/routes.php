@@ -6,11 +6,14 @@ use Response\Render\HTMLRenderer;
 
 return [
         '' => [
-            'GET' => function (string $url = null): HTMLRenderer {
+            'GET' => function (): HTMLRenderer {
             $expirations =  DatabaseHelper::getExpirations();
             return new HTMLRenderer('component/top', ['expirations' => $expirations]);
             },
-            'POST' => function (array $data): HTMLRenderer | JSONRenderer {
+            'POST' => function (): HTMLRenderer | JSONRenderer {
+            $json = file_get_contents('php://input');
+            $data = json_decode($json, true);
+
             $snippet = $data['snippet'];
             $language = $data['language'];
             $expiration = $data['expiration'];
@@ -50,7 +53,8 @@ return [
         }
     ],
     'snippet' => [
-            'GET' => function (string $url): HTMLRenderer {
+            'GET' => function (): HTMLRenderer {
+            $url = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
             $paths = explode('/', $url);
 
             // hash部分がない場合は404を出す
