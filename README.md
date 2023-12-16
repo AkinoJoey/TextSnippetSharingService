@@ -24,6 +24,14 @@ https://text-snippetter.yuki-gakiya.com
 4. 「Create Snippet」ボタンをクリックすると、共有用の一意のURLに移動します。
 5. このURLを通じて自分が作成したスニペットを他の人と共有します。
 
+## 機能一覧
+- スニペット作成
+- URL作成
+- 有効期限管理
+- コードエディター
+- 複数言語対応のシンタックスハイライト表示
+- エラーハンドリング
+
 ## 作成の経緯
 以下の知識・技術を駆使して、動的なWEBアプリケーションを構築し、サーバーサイドのスキル向上を図りました。
 
@@ -35,20 +43,33 @@ https://text-snippetter.yuki-gakiya.com
 
 
 ## 使用技術
-- フロントエンド
-  - 使用言語： HTML, CSS, Javascript
-  - コードエディタ: Monaco Editor
-  - CSSフレームワーク: Pico.css, Flexbox Grid
 
-- バックエンド
-  - 使用言語： PHP
-  - データベース： MySQL
-  - Webサーバー: NGINX
-  - サーバー: Amazon EC2
-  - SSL/TLS証明書更新: Certbot
+### フロントエンド
+| 項目              | 内容                   |
+|-------------------|------------------------|
+| 使用言語          | HTML, CSS, Javascript  |
+| コードエディタ    | Monaco Editor          |
+| CSSフレームワーク | Pico.css, Flexbox Grid  |
+
+### バックエンド
+| 項目              | 内容                   |
+|-------------------|------------------------|
+| 使用言語          | PHP                    |
+| データベース      | MySQL                  |
+| Webサーバー       | NGINX                  |
+| サーバー          | Amazon EC2             |
+| SSL/TLS証明書更新 | Certbot                |
+
 
 ## 期間
 2023年11月10日から7日間かけて開発しました。
+
+## ER図
+当プロジェクトでは、マイグレーションを除いた場合、snippetsテーブルだけを利用しています。  
+以下はsnippetsテーブルのER図です。
+
+![plantUML](https://github.com/AkinoJoey/TextSnippetSharingService/assets/124570638/c6a50f39-dfdd-4031-a3bf-5dc8e57c74ed)
+
 
 ## こだわった点
 ### マイグレーションベースのスキーマ管理
