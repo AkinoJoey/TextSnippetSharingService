@@ -68,7 +68,9 @@ https://text-snippetter.yuki-gakiya.com
 当プロジェクトでは、マイグレーションを除いた場合、snippetsテーブルだけを利用しています。  
 以下はsnippetsテーブルのER図です。
 
-![plantUML](https://github.com/AkinoJoey/TextSnippetSharingService/assets/124570638/c6a50f39-dfdd-4031-a3bf-5dc8e57c74ed)
+![plantUML (3)](https://github.com/AkinoJoey/TextSnippetSharingService/assets/124570638/c1b6b591-7876-4e9e-9523-04c65a9ce8ec)
+
+
 
 
 ## こだわった点
